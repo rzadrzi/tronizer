@@ -1,0 +1,1 @@
+from app.web.models.user_model import UserModel

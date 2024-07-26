@@ -1,0 +1,43 @@
+from uuid import uuid4
+
+from fastapi import HTTPException
+
+# from web.models.user_model import UserModel
+from models import UserModel
+# from web.schema.schema import UserSchema
+from schema import UserSchema
+
+
+class UserController:
+
+    async def get(self, user_id: str):
+        user = await UserModel.find_one(UserModel.user_id == user_id)
+        if user is None:
+            raise HTTPException(status_code=404, detail="User does not exists")
+        return user
+
+    async def create(self, user: UserSchema) -> str:
+        try:
+            user_id = uuid4().hex
+            user_id = "TZ" + user_id[:12]
+            user = UserModel(
+                user_id=user_id,
+                username=user.username,
+                password=user.password,
+                phone_number=user.phone_number,
+                email=user.email
+            )
+            await user.insert()
+            return user.user_id
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"User already exists {e}")
+
+    async def get_balance(self, token: str) -> float:
+        user = await self.get(token)
+        return user.total_balance
+
+    async def update_balance(self, token: str, amount: float):
+        user = await self.get(token)
+        user.total_balance += amount
+        await user.save()
+        return user

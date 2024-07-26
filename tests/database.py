@@ -1,3 +1,9 @@
+import asyncio
+
+from beanie import init_beanie
+from motor.motor_asyncio import AsyncIOMotorClient
+# from models import UserModel
+# from web.models.user_model import UserModel
 from datetime import datetime
 from typing import Optional
 from uuid import uuid4
@@ -7,7 +13,7 @@ from beanie import Document, Indexed
 from pydantic import Field
 
 
-class User(Document):
+class UserModel(Document):
     """
     User model for using user on database
     use beanie library
@@ -29,3 +35,15 @@ class User(Document):
                 ("email", pymongo.TEXT)
             ]
         ]
+
+
+async def db_init(uri):
+    print("welcome to database")
+    document_models = [UserModel]
+    tronizer = AsyncIOMotorClient(uri).tronizer
+    await init_beanie(database=tronizer, document_models=document_models)
+    print("db connected!!!")
+
+
+if __name__=="__main__":
+    asyncio.run(db_init("mongodb://127.0.0.1:27017"))

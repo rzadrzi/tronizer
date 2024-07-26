@@ -1,0 +1,1 @@
+from app.web.controllers.user_controller import UserController
