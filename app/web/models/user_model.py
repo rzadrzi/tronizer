@@ -5,7 +5,7 @@ from uuid import uuid4
 import pymongo
 from beanie import Document, Indexed
 from pydantic import Field
-
+from pymongo import IndexModel
 
 class UserModel(Document):
     """

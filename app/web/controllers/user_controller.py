@@ -10,6 +10,7 @@ class UserController:
 
     async def get_one(self, user_id: str):
         user = await UserModel.find_one(UserModel.user_id == user_id)
+        print(user)
         if user is None:
             raise HTTPException(status_code=404, detail="User does not exists")
         return user

@@ -1,6 +1,5 @@
 from uuid import uuid4
 
-import pymongo
 import tldextract
 from beanie import WriteRules
 from fastapi import HTTPException
@@ -26,21 +25,34 @@ class APIController:
             domain = d.domain + "." + d.suffix
             str_uuid = uuid4().hex
             api_key = "TZ" + str_uuid + "ER"
-            partner = PartnerModel(user_id=user, permission=True)
 
             api = APIModel(
                 api_key=api_key,
                 owner=user,
                 url=api.url,
-                domain=domain,
-                partner=[partner]
+                domain=domain
             )
             await api.insert(link_rule=WriteRules.WRITE)
+
+            partner = PartnerModel(user=user, api=api, permission=True)
+            await partner.insert(link_rule=WriteRules.WRITE)
 
         except Exception as e:
             print(e)
             raise HTTPException(status_code=400, detail=f"{e}")
         return api.api_key
+
+    async def add_partner(self, user_id: str, api_key: str, permission: bool = False):
+        user_ctrl = UserController()
+        user = await user_ctrl.get_one(user_id)
+        api = await self.get_one(api_key)
+
+        try:
+            partner = PartnerModel(user=user, api=api, permission=permission)
+            await partner.insert(link_rule=WriteRules.WRITE)
+            return partner
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"Partner does not added: {e}")
 
     async def get_balance(self, api_key: str) -> float:
         api = await self.get_one(api_key)
@@ -52,11 +64,5 @@ class APIController:
         await api.save()
         return api
 
-    async def add_partner(self, api_key: str, user_id: str, permission: bool = False):
-        user_ctrl = UserController()
-        user = await user_ctrl.get_one(user_id=user_id)
-        api = await self.get_one(api_key)
-        partner = PartnerModel(user=user, permission=permission)
-        api.partner.append(partner)
-        await api.save()
-        return api
+
+

@@ -4,7 +4,7 @@ from models import UserModel, PartnerModel, APIModel
 
 
 async def db_init(uri):
-    document_models = [UserModel, APIModel]
+    document_models = [UserModel, APIModel, PartnerModel]
 
     tronizer = AsyncIOMotorClient(uri).tronizer
 
