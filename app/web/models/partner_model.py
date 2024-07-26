@@ -10,6 +10,7 @@ class PartnerModel(Document):
     api: Link[APIModel] = Field(default=None)
     permission: bool = Field(default=False)
 
+
     class Settings:
         name = "partners"
         indexes = [
