@@ -1,11 +1,11 @@
-from beanie import Document
+from beanie import Document, Link
 from pydantic import Field
 
 from models import UserModel
 
 
 class PartnerModel(Document):
-    user: UserModel = Field(default=None)
+    user: Link[UserModel] = Field(default=None)
     permission: bool = Field(default=False)
 
     class Settings:

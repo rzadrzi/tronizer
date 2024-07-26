@@ -1,11 +1,10 @@
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
-from models import UserModel
-# from app.web.models.user_model import UserModel
+from models import UserModel, PartnerModel, APIModel
 
 
 async def db_init(uri):
-    document_models = [UserModel]
+    document_models = [UserModel, APIModel]
 
     tronizer = AsyncIOMotorClient(uri).tronizer
 
