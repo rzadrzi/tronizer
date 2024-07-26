@@ -2,6 +2,7 @@ from datetime import datetime
 from typing import Optional
 from uuid import uuid4
 
+import pymongo
 from beanie import Document, Indexed
 from pydantic import Field
 
@@ -20,3 +21,11 @@ class User(Document):
     total_balance: Optional[float] = Field(default=0.00)
     create_at: float = Field(default=datetime.now().timestamp())
     update_at: float = Field(default=datetime.now().timestamp())
+
+    class Settings:
+        name = "users"
+        indexes = [
+            [
+                ("email", pymongo.TEXT)
+            ]
+        ]
