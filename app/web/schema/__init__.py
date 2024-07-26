@@ -1,1 +1,1 @@
-from app.web.schema.schema import *
+from .schema import *

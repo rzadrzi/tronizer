@@ -1,7 +1,7 @@
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
-# from models import UserModel
-from app.web.models.user_model import UserModel
+from models import UserModel
+# from app.web.models.user_model import UserModel
 
 
 async def db_init(uri):

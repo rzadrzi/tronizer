@@ -1,1 +1,1 @@
-from app.web.routes.user_routes import user_router
+from .user_routes import user_router
