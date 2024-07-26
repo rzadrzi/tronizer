@@ -12,3 +12,9 @@ tests
 /tests
 /tests/
 tests/
+
+__pycache__
+/__pycache__
+__pycache__/
+/__pycache__/
+
