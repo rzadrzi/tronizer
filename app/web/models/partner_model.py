@@ -1,5 +1,6 @@
 from beanie import Document
 from pydantic import Field
+
 from models import UserModel
 
 
