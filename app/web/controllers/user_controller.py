@@ -2,9 +2,7 @@ from uuid import uuid4
 
 from fastapi import HTTPException
 
-# from web.models.user_model import UserModel
 from models import UserModel
-# from web.schema.schema import UserSchema
 from schema import UserSchema
 
 
