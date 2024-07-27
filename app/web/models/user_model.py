@@ -7,6 +7,7 @@ from beanie import Document, Indexed
 from pydantic import Field
 from pymongo import IndexModel
 
+
 class UserModel(Document):
     """
     User model for using user on database
