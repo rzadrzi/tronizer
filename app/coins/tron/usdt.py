@@ -4,6 +4,7 @@ from tronpy.providers import AsyncHTTPProvider, HTTPProvider
 from tronpy.keys import PrivateKey
 from tronpy.defaults import CONF_MAINNET, CONF_NILE
 
+
 class USDT:
     def __init__(self, api_key, public_key, private_key=""):
         self.usdt_contract = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"

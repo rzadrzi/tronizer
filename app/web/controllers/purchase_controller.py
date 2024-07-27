@@ -13,8 +13,6 @@ from models import PurchaseModel
 
 
 class PurchaseController:
-    def __init__(self):
-        self.settings = config.Settings()
 
     async def get_one(self, purchase_token):
         p = await PurchaseModel.find_one(PurchaseModel.purchase_token==purchase_token)
@@ -23,13 +21,14 @@ class PurchaseController:
         return p
 
     async def create(self,  api_key: str,  amount: float) -> Type[tuple]:
+        settings = config.Settings()
         api_controller = APIController()
         api = await api_controller.get_one(api_key=api_key)
 
         wallet_controller = WalletController()
         wallet = await wallet_controller.choice()
 
-        t = TRON(self.settings.TRONGRID, wallet.public_key, wallet.private_key)
+        t = TRON(settings.TRONGRID, wallet.public_key, wallet.private_key)
         old_balance = await t.usdt.balance()
         expiration_at = (datetime.now() + timedelta(minutes=30)).timestamp()
 
@@ -53,15 +52,3 @@ class PurchaseController:
         if len(all) == 0:
             print("all Purchases was closed")
         return all
-
-    # async def get_api(self, api_key: str):
-    #     api = await API.find_one(API.api_key == api_key)
-    #     if api is None:
-    #         raise HTTPException(status_code=404, detail="API does not exists")
-    #     return api
-
-    # async def get_wallet(self, public_key: str):
-    #     wallet = await Wallet.find_one(Wallet.public_key == public_key)
-    #     if wallet is None:
-    #         raise HTTPException(status_code=404, detail="Wallet does not exists")
-    #     return wallet
