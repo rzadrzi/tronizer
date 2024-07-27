@@ -11,12 +11,6 @@ class USDT:
         self.public_key = public_key
         self.private_key = PrivateKey(bytes.fromhex(private_key))
 
-    # async def _test_client(self):
-    #     _http_client = AsyncClient(limits=Limits(max_connections=100, max_keepalive_connections=20),
-    #                                timeout=Timeout(timeout=10, connect=5, read=5))
-    #     provider = AsyncHTTPProvider(CONF_NILE, client=_http_client)
-    #     client = AsyncTron(provider=provider)
-
     async def client(self):
         _http_client = AsyncClient(limits=Limits(max_connections=100, max_keepalive_connections=20),
                                    timeout=Timeout(timeout=10, connect=5, read=5))
