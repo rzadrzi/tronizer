@@ -1,4 +1,6 @@
-import app.libs
+# import app.libs
+import sys
+print(sys.path)
 from fastapi import FastAPI
 
 from contextlib import asynccontextmanager
