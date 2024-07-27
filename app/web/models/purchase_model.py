@@ -8,7 +8,7 @@ from pydantic import Field
 from web.schema.schema import PurchaseStatus
 
 
-class Purchase(Document):
+class PurchaseModel(Document):
     """
     Purchase model for using transaction on database
     use beanie library
