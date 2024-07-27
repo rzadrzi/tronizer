@@ -5,7 +5,7 @@ from uuid import uuid4
 from beanie import Document, Link
 from pydantic import Field
 
-from models import APIModel
+from models import APIModel, WalletModel
 from schema import PurchaseStatus
 
 
@@ -17,7 +17,7 @@ class PurchaseModel(Document):
     network: Optional[str] = Field(default="TRON")
     purchase_token: Optional[str] = Field(default=uuid4().hex)
     api: Link[APIModel] = Field(default=None)
-    wallet: Optional[str] = Field(default=None) # Wallet public_key
+    wallet: Optional[Link[WalletModel]] = Field(default=None)
     amount: float = Field(default=0.00)
     balance: float = Field(default=0.00)
     is_open: bool = Field(default=True)
@@ -26,3 +26,6 @@ class PurchaseModel(Document):
     create_at: float = Field(default=datetime.now().timestamp())
     update_at: float = Field(default=datetime.now().timestamp())
     expiration_at: float = Field(default=(datetime.now()+timedelta(minutes=30)).timestamp())
+
+    class Settings:
+        name = "purchases"

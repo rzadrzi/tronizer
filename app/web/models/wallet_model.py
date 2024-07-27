@@ -16,4 +16,4 @@ class WalletModel(Document):
     in_order: bool = Field(default=False)
 
     class Settings:
-        collections = "wallets"
+        name = "wallets"
