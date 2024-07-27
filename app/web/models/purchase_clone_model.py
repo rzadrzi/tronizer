@@ -4,7 +4,7 @@ from models import PurchaseModel
 
 
 class PurchaseCloneModel(Document):
-    purchase_clone_model = Link[PurchaseModel]
+    purchase = Link[PurchaseModel]
 
     class Settings:
         name = "purchase_clones"

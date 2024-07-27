@@ -9,12 +9,12 @@ from fastapi import HTTPException
 import config
 from coins import TRON
 from controllers import WalletController, APIController
-from models import PurchaseModel
+from models import PurchaseModel, PurchaseCloneModel
 
 
 class PurchaseController:
 
-    async def get_one(self, purchase_token):
+    async def get_one(self, purchase_token: str) -> PurchaseModel:
         p = await PurchaseModel.find_one(PurchaseModel.purchase_token==purchase_token)
         if p is None:
             raise HTTPException(status_code=404, detail="Purchase was not created")
@@ -34,7 +34,7 @@ class PurchaseController:
 
         purchase_token = uuid4().hex
 
-        purchase = await PurchaseModel(
+        purchase = PurchaseModel(
             purchase_token=purchase_token,
             api=api,
             wallet=wallet,
@@ -52,3 +52,21 @@ class PurchaseController:
         if len(all) == 0:
             print("all Purchases was closed")
         return all
+
+    async def clone(self, purchase_token: str) -> PurchaseCloneModel:
+        purchase = self.get_one(purchase_token)
+        purchase_clone = PurchaseCloneModel(purchase = purchase)
+        try:
+            await purchase_clone.insert(link_rule=WriteRules.WRITE)
+            return purchase_clone
+        except Exception as e:
+            raise HTTPException(status_code=403, detail="clone does not created")
+
+    async def get_clone(self, purchase_token: str):
+        try:
+            clone = await PurchaseCloneModel.find_one(
+                PurchaseCloneModel.purchase.purchase_token==purchase_token
+            )
+            return clone
+        except Exception as e:
+            raise HTTPException(status_code=404, detail="clone does not exists")
