@@ -4,7 +4,7 @@ from typing import Optional
 from beanie import Document, Link
 from pydantic import Field
 
-from web import PartnerModel
+from models import PartnerModel
 from schema import WithdrawalStatus
 
 
