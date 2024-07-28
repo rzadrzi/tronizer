@@ -1,8 +1,8 @@
 from typing import Annotated
-from fastapi import APIRouter, Header
+from fastapi import APIRouter, Header, HTTPException
 
-from controllers import APIController
-from schema import APISchema, AddPartner
+from controllers import APIController, WithdrawalController
+from schema import APISchema, AddPartner, WithdrawalSchema
 
 
 api_router = APIRouter(
@@ -42,3 +42,22 @@ async def get_balance(
         # "withdrawal_history":withdrawal_history,
         # "transaction_history": transaction_history
         }
+
+
+@api_router.post("/withdrawal")
+async def withdrawal(
+        USER_ID: Annotated[str | None, Header()],
+        API_KEY: Annotated[str | None, Header()],
+        withdrawal: WithdrawalSchema
+):
+
+    withdrawal_ctrl = WithdrawalController()
+    await withdrawal_ctrl.transfer(
+        user_id=USER_ID,
+        api_key=API_KEY,
+        to=withdrawal.to,
+        amount=withdrawal.amount
+    )
+    return {
+        "withdrawal": withdrawal.amount
+    }

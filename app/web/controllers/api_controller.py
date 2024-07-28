@@ -1,10 +1,11 @@
 from uuid import uuid4
 
+import pymongo
 import tldextract
 from beanie import WriteRules
 from fastapi import HTTPException
 from controllers import UserController
-from models import APIModel, PartnerModel
+from models import APIModel, PartnerModel, PurchaseCloneModel, WithdrawalModel
 from schema import APISchema
 
 
@@ -54,6 +55,16 @@ class APIController:
         except Exception as e:
             raise HTTPException(status_code=400, detail=f"Partner does not added: {e}")
 
+    async def get_one_partner(self, user_id: str, api_key: str):
+        try:
+            partner = await PartnerModel.find_one(
+                PartnerModel.user.user_id==user_id,
+                PartnerModel.api.api_key == api_key
+            )
+            return partner
+        except Exception as e:
+            raise HTTPException(status_code=404, detail="user id or api key is not true")
+
     async def get_balance(self, api_key: str) -> float:
         api = await self.get_one(api_key)
         return api.balance
@@ -63,6 +74,22 @@ class APIController:
         api.total_balance += amount
         await api.save()
         return api
+
+    async def transaction_history(self, api_key: str, offset: int, limit: int):
+        c = await PurchaseCloneModel.find(PurchaseCloneModel.api_key==api_key)\
+            .sort([(PurchaseCloneModel.create_at, pymongo.ASCENDING),])\
+                .skip(offset)\
+                    .limit(limit)\
+                        .to_list()
+        return c
+
+    async def withdrawal_history(self, api_key: str, offset: int, limit: int):
+        w = await WithdrawalModel.find(WithdrawalModel.api_key==api_key)\
+            .sort([(WithdrawalModel.create_at, pymongo.ASCENDING),])\
+                .skip(offset)\
+                    .limit(limit)\
+                        .to_list()
+        return w
 
 
 
