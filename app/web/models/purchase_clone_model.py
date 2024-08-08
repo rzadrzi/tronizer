@@ -10,6 +10,7 @@ from schema import PurchaseStatus
 
 class PurchaseCloneModel(Document):
     purchase: Link[PurchaseModel]
+    balance: float = Field(default=0.00)
     status: PurchaseStatus = Field(default=PurchaseStatus.fail)
     create_at: float = Field(default=datetime.now().timestamp())
     update_at: float = Field(default=datetime.now().timestamp())
