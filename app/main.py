@@ -5,7 +5,7 @@ from fastapi import FastAPI
 
 from contextlib import asynccontextmanager
 from app.web.database.database_config import db_init
-from routes import user_router, api_router
+from routes import user_router, api_router, customer_router
 
 
 @asynccontextmanager
@@ -25,3 +25,4 @@ app = FastAPI(
 
 app.include_router(user_router)
 app.include_router(api_router)
+app.include_router(customer_router)

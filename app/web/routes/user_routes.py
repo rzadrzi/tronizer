@@ -16,9 +16,9 @@ async def create_user(user: UserSchema):
     user_id = await uctlr.create(user)
     return {"USER_ID": user_id}
 
-
-@user_router.post("/get-one")
-async def get_one(user_id: str):
-    user_controller = UserController()
-    user = await user_controller.get_one(user_id)
-    return {"user": user}
+#
+# @user_router.post("/get-one")
+# async def get_one(user_id: str):
+#     user_controller = UserController()
+#     user = await user_controller.get_one(user_id)
+#     return {"user": user}
