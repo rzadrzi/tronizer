@@ -3,9 +3,9 @@
 ### New DeFi App
 
 ### Table of content
-[Local Usage](#local-usage)
+- [Local Usage](#local-usage)
 
-[Deployment](#deployment)
+- [Deployment](#deployment)
 
 -----
 <a name="local-usage"/>
