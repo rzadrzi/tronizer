@@ -2,16 +2,33 @@
 
 ### New DeFi App
 
-- [Local Usage] (#local-usage)
+### Table of content
+[Local Usage](#local-usage)
+
+[Deployment](#deployment)
+
+-----
+<a name="local-usage"/>
+
 ### Local Usage
 first install python from `https://www.python.org/`
+
+Create virtual environment in `python`
 
 ```commandline
 python3 -m venv venv
 ```
+
+
 ```commandline
 source venv/bin/activated
 ```
+```commandline
+pip install -r requirements.txt
+```
+
+<a name="deployment"/>
+
 
 ### Deployment
 `nginx` configuration: 
