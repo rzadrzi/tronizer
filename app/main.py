@@ -1,17 +1,23 @@
-# import app.libs
-import sys
-print(sys.path)
+
 from fastapi import FastAPI
 
 from contextlib import asynccontextmanager
 from app.web.database.database_config import db_init
 from routes import user_router, api_router, customer_router
+from config import Settings
 
 
 @asynccontextmanager
 async def lifespan(app:FastAPI):
     print("Welcome to Tronizer")
-    uri = "mongodb://127.0.0.1:27017"
+    global uri
+    settings = Settings()
+
+    if settings.MODE == "local":
+        uri = settings.MONGO_LOCAL_URI
+    elif settings.MODE == "docker":
+        uri = settings.MONGO_DOCKER_URI
+
     await db_init(uri)
 
     yield
