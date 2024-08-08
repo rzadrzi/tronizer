@@ -1,20 +1,26 @@
 # Tronizer
 
 ### New DeFi App
+
+- [Local Usage] (#local-usage)
+### Local Usage
+first install python from `https://www.python.org/`
+
 ```commandline
 python3 -m venv venv
-
+```
+```commandline
 source venv/bin/activated
-
 ```
 
+### Deployment
 `nginx` configuration: 
-
+`/etc/`
 ```nginx
 http {
     server {
         listen 80;
-        server_name <YOUR DOMINE MANE> ;
+        server_name <YOUR DOMINE NAME> ;
 
         location / {
             proxy_pass http://app:8000;
@@ -30,10 +36,10 @@ http {
 
     server {
         listen 443 ssl;
-        server_name <YOUR DOMINE MANE>;
+        server_name <YOUR DOMINE NAME>;
 
-        ssl_certificate /etc/letsencrypt/live/<YOUR DOMINE MANE>/fullchain.pem;
-        ssl_certificate_key /etc/letsencrypt/live/<YOUR DOMINE MANE>/privkey.pem;
+        ssl_certificate /etc/letsencrypt/live/<YOUR DOMINE NAME>/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/<YOUR DOMINE NAME>/privkey.pem;
 
         location / {
             proxy_pass http://app:8000;
