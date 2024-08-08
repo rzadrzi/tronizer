@@ -1,8 +1,9 @@
+import pymongo
 from beanie import Document, Link
 from pydantic import Field
-from models import UserModel, APIModel
-import pymongo
 from pymongo import IndexModel
+
+from models import UserModel, APIModel
 
 
 class PartnerModel(Document):
