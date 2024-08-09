@@ -1,10 +1,12 @@
 
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
-from contextlib import asynccontextmanager
-from app.web.database.database_config import db_init
-from routes import user_router, api_router, customer_router
 from config import Settings
+from database import db_init
+from routes import user_router, api_router, customer_router
+from scheduler import collector_scheduler
 
 
 @asynccontextmanager
@@ -19,6 +21,8 @@ async def lifespan(app:FastAPI):
         uri = settings.MONGO_DOCKER_URI
 
     await db_init(uri)
+
+    await collector_scheduler()
 
     yield
 
