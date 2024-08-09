@@ -3,7 +3,7 @@ from coins.tron.tron import TRON
 from models import WalletModel
 
 
-async def collect():
+async def collector():
     settings = config.Settings()
     all_wallets = await WalletModel.find().to_list()
     for wallet in all_wallets:

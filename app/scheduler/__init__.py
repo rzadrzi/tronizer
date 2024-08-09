@@ -1,1 +1,1 @@
-from .scheduler import collect_scheduler
+from .scheduler import collector_scheduler

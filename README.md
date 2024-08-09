@@ -25,13 +25,21 @@ install packages from `requirements.txt`:
 ```commandline
 pip install -r requirements.txt
 ```
+Then use bash code
+```commandline
+bash start.sh
+```
+go to `127.0.0.1:8000/docs` and see the `fastapi` document 
 
+------
 
 <a name="deployment"/>
 
 
 ### Deployment
+
 `nginx` configuration: 
+
 `/etc/nginx/sites-available/YOUR-DOMAIN-NAME`
 ```nginx
 server {
