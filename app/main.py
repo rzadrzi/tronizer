@@ -36,16 +36,9 @@ app = FastAPI(
     version="0.0.13",
     lifespan=lifespan
 )
+
 static_path = str(os.path.join(os.getcwd(), "app", "web", "templates", "static"))
 app.mount("/static", StaticFiles(directory=static_path), name="static")
-templates_path = str(os.path.join(os.getcwd(), "app", "web", "templates"))
-print(templates_path)
-templates = Jinja2Templates(directory=templates_path)
-
-
-@app.get("/purchase", response_class=HTMLResponse)
-async def purchase_query_get(request: Request):
-    return templates.TemplateResponse(request=request, name="qrcode.html")
 
 
 app.include_router(user_router)
