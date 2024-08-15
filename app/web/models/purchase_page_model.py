@@ -12,7 +12,7 @@ class PurchasePageModel(Document):
     purchase: Link[PurchaseModel]
     create_at: float = Field(default=datetime.now().timestamp())
     update_at: float = Field(default=datetime.now().timestamp())
-    expiration_at: float = Field(default=(datetime.now()+timedelta(minutes=10)).timestamp())
+    expiration_at: float = Field(default=(datetime.now()+timedelta(minutes=5)).timestamp())
 
     class Settings:
-        name = "purchases"
+        name = "purchase_pages"
