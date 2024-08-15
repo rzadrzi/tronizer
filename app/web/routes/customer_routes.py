@@ -1,5 +1,5 @@
 import os
-from typing import Annotated
+from typing import Annotated, Tuple
 
 from fastapi import APIRouter, Header, HTTPException, Request
 from fastapi.responses import HTMLResponse
@@ -43,13 +43,16 @@ async def purchase_query(api_key, payment: PaymentSchema):
         raise HTTPException(status_code=400, detail="amount can not be 0")
     purchase_controller = PurchaseController()
     purchase, wallet = await purchase_controller.create(api_key=api_key, amount=payment.amount)
-    content = {"wallet": wallet}
-    headers = {"PURCHASE_TOKEN": purchase}
-    return JSONResponse(content=content, headers=headers)
+    purchase_page = await purchase_controller.create_page(purchase)
+    return {"purchase": f"{purchase}", "wallet": f"{wallet}"}
 
 
-@customer_router.get("/purchase/{id}", response_class=HTMLResponse)
-async def purchase_query_get(request: Request, id: str):
+@customer_router.get("/purchase/{purchase_token}", response_class=HTMLResponse)
+async def purchase_query_get(request: Request, purchase_token: str):
+    purchase_controller = PurchaseController()
+    get_page = await purchase_controller.get_page(purchase_token)
+
+    timer = get_page.expiration_at
     return templates.TemplateResponse(
-        request=request, name="qrcode.html", context={"id": id}
+        request=request, name="qrcode.html", context={"timer": timer}
     )

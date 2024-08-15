@@ -6,12 +6,21 @@ from models import (
     APIModel,
     WalletModel,
     PurchaseModel,
-    PurchaseCloneModel
+    PurchaseCloneModel,
+    PurchasePageModel
 )
 
 
 async def db_init(uri):
-    document_models = [UserModel, APIModel, PartnerModel, WalletModel, PurchaseModel, PurchaseCloneModel]
+    document_models = [
+        UserModel,
+        APIModel,
+        PartnerModel,
+        WalletModel,
+        PurchaseModel,
+        PurchaseCloneModel,
+        PurchasePageModel
+    ]
 
     tronizer = AsyncIOMotorClient(uri).tronizer
 

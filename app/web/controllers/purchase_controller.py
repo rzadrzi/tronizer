@@ -9,7 +9,7 @@ from fastapi import HTTPException
 import config
 from coins import TRON
 from controllers import WalletController, APIController
-from models import PurchaseModel, PurchaseCloneModel
+from models import PurchaseModel, PurchaseCloneModel, PurchasePageModel
 
 
 class PurchaseController:
@@ -20,7 +20,7 @@ class PurchaseController:
             raise HTTPException(status_code=404, detail="Purchase was not created")
         return p
 
-    async def create(self,  api_key: str,  amount: float) -> Type[tuple]:
+    async def create(self,  api_key: str,  amount: float) -> Tuple[str, str]:
         settings = config.Settings()
         api_controller = APIController()
         api = await api_controller.get_one(api_key=api_key)
@@ -45,7 +45,7 @@ class PurchaseController:
         )
         await purchase.insert(link_rule=WriteRules.WRITE)
 
-        return Tuple[purchase.purchase_token, wallet.public_key]
+        return purchase.purchase_token, wallet.public_key
 
     async def get_all_openes_purchase(self):
         all = await PurchaseModel.find(PurchaseModel.is_open==True).to_list()
@@ -55,7 +55,7 @@ class PurchaseController:
 
     async def clone(self, purchase_token: str) -> PurchaseCloneModel:
         purchase = self.get_one(purchase_token)
-        purchase_clone = PurchaseCloneModel(purchase = purchase)
+        purchase_clone = PurchaseCloneModel(purchase=purchase)
         try:
             await purchase_clone.insert(link_rule=WriteRules.WRITE)
             return purchase_clone
@@ -65,8 +65,30 @@ class PurchaseController:
     async def get_clone(self, purchase_token: str):
         try:
             clone = await PurchaseCloneModel.find_one(
-                PurchaseCloneModel.purchase.purchase_token==purchase_token
+                PurchaseCloneModel.purchase.purchase_token==purchase_token,
+                fetch_links=True
             )
-            return clone
+            return clone[0]
         except Exception as e:
             raise HTTPException(status_code=404, detail="clone does not exists")
+
+    async def create_page(self, purchase_token: str):
+        purchase = await self.get_one(purchase_token)
+        purchase_page = PurchasePageModel(purchase=purchase)
+        try:
+            await purchase_page.insert(link_rule=WriteRules.WRITE)
+            return purchase_page
+        except Exception as e:
+            raise HTTPException(status_code=403, detail="clone does not created")
+
+    async def get_page(self, purchase_token: str):
+        try:
+            purchase_page = await PurchasePageModel.find(
+                PurchasePageModel.purchase.purchase_token==purchase_token,
+                fetch_links=True
+            ).to_list()
+            return purchase_page[0]
+        except Exception as e:
+            raise HTTPException(status_code=404, detail="page does not exists")
+
+
