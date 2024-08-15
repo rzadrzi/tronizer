@@ -1,5 +1,6 @@
 import os
 from typing import Annotated, Tuple
+from datetime import datetime, timedelta
 
 from fastapi import APIRouter, Header, HTTPException, Request
 from fastapi.responses import HTMLResponse
@@ -52,7 +53,11 @@ async def purchase_query_get(request: Request, purchase_token: str):
     purchase_controller = PurchaseController()
     get_page = await purchase_controller.get_page(purchase_token)
 
-    timer = get_page.expiration_at
+    x = get_page.expiration_at - datetime.now().timestamp()
+    if x > 0:
+        timer = x
+    else:
+        timer = None
     return templates.TemplateResponse(
         request=request, name="qrcode.html", context={"timer": timer}
     )
