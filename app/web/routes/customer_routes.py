@@ -8,9 +8,9 @@ from fastapi.templating import Jinja2Templates
 
 from controllers import PurchaseController
 from web.schema.schema import PaymentSchema
+
 templates_path = str(os.path.join(os.getcwd(), "app", "web", "templates"))
 
-# templates_path = ""
 templates = Jinja2Templates(directory=templates_path)
 
 
@@ -48,16 +48,8 @@ async def purchase_query(api_key, payment: PaymentSchema):
     return JSONResponse(content=content, headers=headers)
 
 
-@customer_router.get("/template-path",)
-async def purchase_query_get():
-    return {"path": templates_path}
-
-
 @customer_router.get("/purchase/{id}", response_class=HTMLResponse)
 async def purchase_query_get(request: Request, id: str):
     return templates.TemplateResponse(
         request=request, name="qrcode.html", context={"id": id}
     )
-
-
-
