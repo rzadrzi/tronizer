@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from config import Settings
 from database import db_init
 from routes import user_router, api_router, customer_router
-from scheduler import collector_scheduler
+from scheduler import collector_scheduler, balance_scheduler
 
 
 @asynccontextmanager
@@ -23,6 +23,7 @@ async def lifespan(app:FastAPI):
     await db_init(uri)
 
     await collector_scheduler()
+    await balance_scheduler()
 
     yield
 
