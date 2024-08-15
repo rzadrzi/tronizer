@@ -1,8 +1,9 @@
 from typing import Annotated
-from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
+
 from fastapi import APIRouter, Header, HTTPException, Request
+from fastapi.responses import HTMLResponse
 from fastapi.responses import JSONResponse
+from fastapi.templating import Jinja2Templates
 
 from controllers import PurchaseController
 from web.schema.schema import PaymentSchema
