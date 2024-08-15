@@ -1,9 +1,11 @@
+import os
+
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 
 from config import Settings
 from database import db_init
@@ -35,10 +37,17 @@ app = FastAPI(
     version="0.0.13",
     lifespan=lifespan
 )
+static_path = str(os.path.join(os.getcwd(), "app", "web", "templates", "static"))
+app.mount("/static", StaticFiles(directory=static_path), name="static")
+templates_path = str(os.path.join(os.getcwd(), "app", "web", "templates"))
+print(templates_path)
+templates = Jinja2Templates(directory=templates_path)
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
 
-templates = Jinja2Templates(directory="templates")
+@app.get("/purchase", response_class=HTMLResponse)
+async def purchase_query_get(request: Request):
+    return templates.TemplateResponse(request=request, name="qrcode.html")
+
 
 app.include_router(user_router)
 app.include_router(api_router)

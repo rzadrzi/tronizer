@@ -3,3 +3,4 @@ from .models import *
 from .database import *
 from .controllers import *
 from .routes import *
+from .templates import *

@@ -17,4 +17,13 @@ sys.path.append(os.path.join(os.getcwd(), "app", "coins"))
 # modules inside Coins module
 sys.path.append(os.path.join(os.getcwd(), "app", "coins", "tron"))
 
+
+sys.path.append(os.path.join(os.getcwd(), "app", "scheduler"))
+sys.path.append(os.path.join(os.getcwd(), "app", "scheduler", "tasks"))
+
+
+sys.path.append(os.path.join(os.getcwd(), "app", "web", "templates"))
+sys.path.append(os.path.join(os.getcwd(), "app", "web", "templates", "static"))
+
+
 print(sys.path)

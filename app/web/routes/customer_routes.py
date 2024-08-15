@@ -1,10 +1,14 @@
 from typing import Annotated
-
-from fastapi import APIRouter, Header, HTTPException
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
+from fastapi import APIRouter, Header, HTTPException, Request
 from fastapi.responses import JSONResponse
 
 from controllers import PurchaseController
 from web.schema.schema import PaymentSchema
+
+templates = Jinja2Templates(directory="../templates")
+
 
 customer_router = APIRouter(
     prefix="/customer"
@@ -30,7 +34,7 @@ async def confirm(PURCHASE_TOKEN: Annotated[str | None, Header()]):
 
 
 @customer_router.post("/purchase-query")
-async def purchase(api_key, payment: PaymentSchema):
+async def purchase_query(api_key, payment: PaymentSchema):
     if payment.amount == 0 or payment.amount is None:
         raise HTTPException(status_code=400, detail="amount can not be 0")
     purchase_controller = PurchaseController()
@@ -39,5 +43,13 @@ async def purchase(api_key, payment: PaymentSchema):
     headers = {"PURCHASE_TOKEN": purchase}
     return JSONResponse(content=content, headers=headers)
 
-# @customer_router.get("/purchase-query/{}")
+
+@customer_router.get("/purchase/{id}", response_class=HTMLResponse)
+async def purchase_query_get(request: Request, id: str):
+
+    return templates.TemplateResponse(
+        request=request, name="qrcode.html", context={"id": id}
+    )
+
+
 
