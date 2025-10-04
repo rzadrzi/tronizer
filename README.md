@@ -4,11 +4,11 @@ A production‑lean FastAPI DeFi skeleton with Docker, Compose & Nginx — tuned
 
 ## Why Tronizer?
 
-Batteries‑included: local dev script, Dockerfile, Compose, and Nginx reverse‑proxy example.
+**Batteries‑included:** local dev script, Dockerfile, Compose, and Nginx reverse‑proxy example.
 
-Zero‑to‑prod runbook: copy‑paste blocks for local/dev, container, and server deploy.
+**Zero‑to‑prod runbook:** copy‑paste blocks for local/dev, container, and server deploy.
 
-Self‑documenting: OpenAPI/Swagger at /docs out of the box.
+**Self‑documenting:** OpenAPI/Swagger at /docs out of the box.
 
 
 ### Table of content
