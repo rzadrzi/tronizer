@@ -1,5 +1,100 @@
 # Tronizer
 ## Introduction
+
+**Tronizer** is a minimal, production-lean FastAPI template for **on-chain payments** that aims to compress **settlement** from days to seconds and drive **per-transaction costs** down to cents (network-dependent). It’s built for teams that want borderless checkout, **24/7 settlement**, and programmatic payment flows—without the legacy friction of card and wire rails.
+
+### What Tronizer *is*
+- A lightweight, Docker-ready **payment backend skeleton** for integrating crypto payments (e.g., stablecoins) into your app.
+- **OpenAPI documented** by default (`/docs`), with clean local/dev workflows and a ready-to-use Nginx reverse-proxy example.
+- Designed for **webhook/callback-friendly** flows, idempotent server logic, and easy extension.
+
+### What Tronizer *is not*
+- Not a custodian, exchange, or KYC/AML provider.
+- Not a fiat on/off-ramp.
+- Not tied to a specific chain or asset: you plug in the network(s) you need.
+
+---
+
+### Why it outperforms bank rails
+
+- **Finality in seconds–minutes**  
+  Public low-fee networks confirm transactions after a small number of blocks; economic finality typically lands within seconds to a few minutes (varies by network and load).
+
+- **Always-on settlement (24/7/365)**  
+  No business-day cutoffs. Unlike card settlements (often **T+1–T+3**) or wires (**1–3 business days**, longer cross-border), on-chain settlement runs continuously.
+
+- **Fewer intermediaries, less latency**  
+  Payer → network → your wallet/gateway. Fewer hops means faster funds availability and simpler reconciliation.
+
+---
+
+### Why it’s cheaper for merchants *and* customers
+
+- **Tiny, mostly flat network fees**  
+  Many networks charge a small flat fee instead of a % of basket value (vs. **1.5–3.5% + fixed** for cards). Savings compound on high-ticket items and cross-border orders.
+
+- **No legacy fee stack**  
+  No interchange/assessment layers, cross-border card surcharges, or **chargeback** fees. Cost becomes more predictable.
+
+- **Global by default**  
+  With dollar-pegged stablecoins, you can avoid FX spreads and bank transfer fees for international buyers.
+
+---
+
+### Cost & time at a glance *(illustrative)*
+
+| Flow                           | Typical time to funds | Typical fee model           |
+|--------------------------------|-----------------------|-----------------------------|
+| Card (domestic)                | T+1–T+3               | 1.5–3.5% + fixed per tx     |
+| Wire (domestic)                | Same day–T+1          | Flat bank fee               |
+| Wire (cross-border)            | 1–3 business days+    | Flat + FX spread            |
+| **On-chain (via Tronizer)**    | **Seconds–minutes**   | **Cents (network-dependent)** |
+
+> Numbers vary by provider, card network, issuing country, bank, and chosen blockchain. Treat the table as directional, not contractual.
+
+---
+
+### Quick math (directional)
+
+For a basket of **$100.00**:
+
+- **Cards @ 2.9% + $0.30** → ~$3.20 in fees  
+- **On-chain @ ~$0.00x** (network-dependent) → fractions of a cent to a few cents
+
+> Even if you add a conservative buffer (e.g., treasury ops, FX, custody), the unit economics often remain materially better—especially for high-ticket or cross-border sales.
+
+---
+
+### How it fits in your stack
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant U as Customer Wallet
+    participant N as Blockchain Network
+    participant G as Tronizer (FastAPI)
+    participant S as Your App/Order System
+
+    U->>N: Submit payment txn (to merchant address)
+    N-->>G: New block/confirmation detected
+    G->>S: Webhook/callback (payment confirmed)
+    S-->>G: Acknowledge & fulfill order
+    G-->>U: Optional receipt/confirmation endpoint
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Introduction
 **Tronizer** is a **DeFi App** for payment/collection layer built on digital assets that aims to push **settlement time** down to seconds and keep **per-transaction cost** to just a few cents (or less, depending on the network). It is designed for businesses that need borderless checkout, micropayments, and **24/7 settlement** without the friction of traditional banking.
 
 ### Why is it faster than bank transactions?
