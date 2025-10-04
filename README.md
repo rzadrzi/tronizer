@@ -2,7 +2,7 @@
 ## DeFi App
 A production‑lean FastAPI DeFi skeleton with Docker, Compose & Nginx — tuned for a clean local DX and a minimal, secure prod deploy.
 
-Why Tronizer?
+## Why Tronizer?
 
 Batteries‑included: local dev script, Dockerfile, Compose, and Nginx reverse‑proxy example.
 
