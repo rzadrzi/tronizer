@@ -1,5 +1,18 @@
 # Tronizer
 ## DeFi App
+## Introduction
+**Tronizer** is a payment/collection layer built on digital assets that aims to push **settlement time** down to seconds and keep **per-transaction cost** to just a few cents (or less, depending on the network). It is designed for businesses that need borderless checkout, micropayments, and **24/7 settlement** without the friction of traditional banking.
+
+### Why is it faster than bank transactions?
+- **Finality in seconds to minutes**: On low-fee public networks, transactions reach probabilistic or economic finality after a small number of confirmations—typically within seconds to a few minutes (network and load dependent).
+- **True 24/7 settlement**: No business-day or cut-off constraints. Unlike card settlement (often T+1 to T+3) or wire transfers (commonly 1–3 business days, longer cross-border), on-chain settlement runs continuously.
+- **Fewer intermediaries**: The hop count is shorter (payer → network → your wallet/gateway), reducing round-trip latency and reconciliation delays.
+
+### Why is it cheaper for both merchant and customer?
+- **Tiny, mostly flat network fees**: Many networks charge a small flat fee instead of a percentage of basket value (vs. 1.5–3.5% + fixed for cards). The difference compounds for high-ticket sales.
+- **No legacy fee layers**: No interchange/assessment stacks, cross-border card fees, or chargeback fees. The cost structure is simpler and more predictable.
+- **Cross-border without hidden spreads**: Paying with dollar-pegged stablecoins can eliminate FX conversion markups and bank transfer fees for international buyers.
+
 A production‑lean FastAPI DeFi skeleton with Docker, Compose & Nginx — tuned for a clean local DX and a minimal, secure prod deploy.
 
 ## Why Tronizer?
