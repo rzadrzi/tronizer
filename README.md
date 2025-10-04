@@ -1,7 +1,6 @@
 # Tronizer
-## DeFi App
 ## Introduction
-**Tronizer** is a payment/collection layer built on digital assets that aims to push **settlement time** down to seconds and keep **per-transaction cost** to just a few cents (or less, depending on the network). It is designed for businesses that need borderless checkout, micropayments, and **24/7 settlement** without the friction of traditional banking.
+**Tronizer** is a **DeFi App** for payment/collection layer built on digital assets that aims to push **settlement time** down to seconds and keep **per-transaction cost** to just a few cents (or less, depending on the network). It is designed for businesses that need borderless checkout, micropayments, and **24/7 settlement** without the friction of traditional banking.
 
 ### Why is it faster than bank transactions?
 - **Finality in seconds to minutes**: On low-fee public networks, transactions reach probabilistic or economic finality after a small number of confirmations—typically within seconds to a few minutes (network and load dependent).
