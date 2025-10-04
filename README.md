@@ -1,7 +1,7 @@
 # Tronizer
-## Introduction
+## Introduction (DeFi + TRON Network)
 
-**Tronizer** is a minimal, production-lean FastAPI template for **on-chain payments** that aims to compress **settlement** from days to seconds and drive **per-transaction costs** down to cents (network-dependent). It’s built for teams that want borderless checkout, **24/7 settlement**, and programmatic payment flows—without the legacy friction of card and wire rails.
+**Tronizer** is a **DeFi**-native payment backend built on the **TRON Network** (TRC-20), optimized for stablecoin flows (e.g., **USDT-TRC20**). It compresses **settlement** from days to seconds and keeps **per-transaction costs** at cents or below (network-dependent). Tronizer targets teams that want borderless checkout, **24/7 settlement**, and programmable payment flows without the friction of card and wire rails.
 
 ### What Tronizer *is*
 - A lightweight, Docker-ready **payment backend skeleton** for integrating crypto payments (e.g., stablecoins) into your app.
@@ -13,65 +13,42 @@
 - Not a fiat on/off-ramp.
 - Not tied to a specific chain or asset: you plug in the network(s) you need.
 
----
+### Why TRON for payments
+- **Fast finality**: TRON’s block time is short (≈ a few seconds), so transactions typically confirm within **seconds to minutes** (varies with network conditions and your confirmation policy).
+- **Low, predictable fees**: TRON’s bandwidth/energy model yields **ultra-low fees**—often a small, mostly flat cost per transfer instead of a % fee on basket value.
+- **Stablecoin liquidity**: **USDT-TRC20** is widely used with deep on-chain liquidity, making it practical for cross-border commerce and payouts.
+- **Always on**: Settlement runs **24/7/365**—no business-day cutoffs, no weekend delays.
 
-### Why it outperforms bank rails
+### Why it’s cheaper than legacy rails
+- **Tiny network fees vs. % card fees**: Cards often charge **1.5–3.5% + fixed** per transaction; TRON transfers are typically **cents or sub-cent** (network-dependent). Savings compound on high-ticket and cross-border orders.
+- **No chargebacks**: Finalized on-chain transfers are **irreversible**, eliminating chargeback fees/abuse.
+- **No legacy fee stack**: No interchange/assessment layers, no cross-border card surcharges, fewer hidden spreads.
 
-- **Finality in seconds–minutes**  
-  Public low-fee networks confirm transactions after a small number of blocks; economic finality typically lands within seconds to a few minutes (varies by network and load).
-
-- **Always-on settlement (24/7/365)**  
-  No business-day cutoffs. Unlike card settlements (often **T+1–T+3**) or wires (**1–3 business days**, longer cross-border), on-chain settlement runs continuously.
-
-- **Fewer intermediaries, less latency**  
-  Payer → network → your wallet/gateway. Fewer hops means faster funds availability and simpler reconciliation.
-
----
-
-### Why it’s cheaper for merchants *and* customers
-
-- **Tiny, mostly flat network fees**  
-  Many networks charge a small flat fee instead of a % of basket value (vs. **1.5–3.5% + fixed** for cards). Savings compound on high-ticket items and cross-border orders.
-
-- **No legacy fee stack**  
-  No interchange/assessment layers, cross-border card surcharges, or **chargeback** fees. Cost becomes more predictable.
-
-- **Global by default**  
-  With dollar-pegged stablecoins, you can avoid FX spreads and bank transfer fees for international buyers.
-
----
+### Why it’s faster than bank rails
+- **Seconds–minutes to usable funds** vs. cards (**T+1–T+3**) and wires (**1–3 business days**, longer cross-border).
+- **Fewer intermediaries**: Payer → **TRON** → your wallet/gateway. Fewer hops = lower latency and simpler reconciliation.
 
 ### Cost & time at a glance *(illustrative)*
+| Flow                              | Typical time to funds | Typical fee model                  |
+|----------------------------------|------------------------|------------------------------------|
+| Card (domestic)                  | T+1–T+3                | 1.5–3.5% + fixed per tx            |
+| Wire (cross-border)              | 1–3 business days+     | Flat + FX spread                   |
+| **TRON (USDT-TRC20 via Tronizer)** | **Seconds–minutes**     | **Cents / sub-cent (network-dep.)** |
 
-| Flow                           | Typical time to funds | Typical fee model           |
-|--------------------------------|-----------------------|-----------------------------|
-| Card (domestic)                | T+1–T+3               | 1.5–3.5% + fixed per tx     |
-| Wire (domestic)                | Same day–T+1          | Flat bank fee               |
-| Wire (cross-border)            | 1–3 business days+    | Flat + FX spread            |
-| **On-chain (via Tronizer)**    | **Seconds–minutes**   | **Cents (network-dependent)** |
+> Treat the table as directional, not contractual. Precise figures depend on network load, wallet policy, and treasury ops.
 
-> Numbers vary by provider, card network, issuing country, bank, and chosen blockchain. Treat the table as directional, not contractual.
+### Merchant benefits
+- **Better unit economics**: Low, flat network fees instead of % rake.
+- **Faster cash flow**: Near-real-time settlement reduces working-capital needs.
+- **Programmable by design**: Webhooks/callbacks, automated invoicing, dynamic discounts, time-locks, split payments.
+- **Micropayment-friendly**: Ultra-low fees make pay-per-use/content viable.
 
----
+### Customer benefits
+- **Global checkout** without relying on local card/bank rails.
+- **Lower effective costs**—especially for high-value and cross-border purchases.
+- **Less card-data exposure** (no PAN/CVV), **on-chain receipts** for transparent audits.
 
-### Quick math (directional)
-
-For a basket of **$100.00**:
-
-- **Cards @ 2.9% + $0.30** → ~$3.20 in fees  
-- **On-chain @ ~$0.00x** (network-dependent) → fractions of a cent to a few cents
-
-> Even if you add a conservative buffer (e.g., treasury ops, FX, custody), the unit economics often remain materially better—especially for high-ticket or cross-border sales.
-
----
-
-## Why Tronizer?
-
-**Batteries‑included:** local dev script, Dockerfile, Compose, and Nginx reverse‑proxy example.
-
-**Zero‑to‑prod runbook:** copy‑paste blocks for local/dev, container, and server deploy.
-
-**Self‑documenting:** OpenAPI/Swagger at /docs out of the box.
+> **Notes & assumptions**: Exact fees/finality depend on the chain, congestion, and your confirmation strategy. To minimize volatility, use **stablecoins** (e.g., USDT-TRC20). Compliance (KYC/AML), tax, and key/wallet management remain the merchant’s responsibility.
 
 
 ### Table of content
